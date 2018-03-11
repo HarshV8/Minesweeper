@@ -16,7 +16,6 @@ Now i know it could have been made better, You're more than welcome to make it w
 #include<string.h>
 #include<dos.h>
 
-using namespace std;
 
 struct player
 {
