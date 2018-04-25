@@ -8,7 +8,7 @@ functions, Although it still will work in Turbo C++ Compilers(We were bound to u
 Now i know it could have been made better, You're more than welcome to make it work again!
 */
 
-#include<fstream>
+#include<fstream.h>
 #include<conio.h>
 #include<time.h>
 #include<stdio.h>
@@ -58,47 +58,47 @@ game::game(int mod)
 for(int j=0;j<c;j++)
 {
 if(i%2!=0&&j%2!=0)
-board[i][j]='þ';
+board[i][j]=char(254);
 else if(i==j&&j==0)
-board[i][j]='Ú';
+board[i][j]=char(218);
 else if(i==0&&j==(c-1))
-board[i][j]='¿';
+board[i][j]=char(191);
 else if(j==0&&i==(r-1))
-board[i][j]='À';
+board[i][j]=char(192);
 else if(i==(r-1)&&j==(c-1))
-board[i][j]='Ù';
+board[i][j]=char(217);
 else if(i==0&&j!=(c-1)&&j!=0)
 {
 if(j%2==0)
-board[i][j]='Â';
-else board[i][j]='Ä';
+board[i][j]=char(194);
+else board[i][j]=char(196);
 }
 else if(i==(r-1)&&j!=(c-1)&&j!=0)
 {
 if(j%2==0)
-board[i][j]='Á';
-else board[i][j]='Ä';
+board[i][j]=char(193);
+else board[i][j]=char(196);
 }
 else if(j==0&&i!=(r-1)&&i!=0)
 {
 if(i%2==0)
-board[i][j]='Ã';
-else board[i][j]='³';
+board[i][j]=char(195);
+else board[i][j]=char(179);
 }
 else if(j==(c-1)&&i!=(r-1)&&i!=0)
 {
 if(i%2==0)
-board[i][j]='´';
-else board[i][j]='³';
+board[i][j]=char(180);
+else board[i][j]=char(179);
 }
 else if(i!=0&&j!=0&&i!=(r-1)&&j!=(c-1))
 {
 if(i%2!=0&&j%2==0)
-board[i][j]='³';
+board[i][j]=char(179);
 else if(i%2==0&&j%2!=0)
-board[i][j]='Ä';
+board[i][j]=char(196);
 else if(i%2==0&&j%2==0)
-board[i][j]='Å';
+board[i][j]=char(197);
 }
 }
 }
@@ -106,6 +106,7 @@ t=13-(r-1)/2;
 u=40-(c-1)/2;
 display(1);
 }
+
 
 void game::boardinit(int x,int y)
 {
@@ -196,15 +197,15 @@ void game::sweep(int x,int y)
     if(grid[gr][gc]==-1)
     {
     gamestat=-1;
-    board[r][c]='';
+    board[r][c]=char(15);
     }
-    else if(board[r][c]=='þ')
+    else if(board[r][c]==char(254))
     {
 	if(grid[gr][gc]!=0)
 	board[r][c]=grid[gr][gc]+48;
 	else if(grid[gr][gc]==0)
 	{
-	    board[r][c]=' ';
+	    board[r][c]=char(32);
 	    if(status(gr,gc)==-3)
 	    {
 			sweep(x,y+2);
@@ -315,6 +316,8 @@ int menu()
     clrscr();
     return choice;
 }
+
+
 void game::move(int k=0)
 {
     char key,control=0;
@@ -356,7 +359,7 @@ void game::move(int k=0)
 		boardinit(wherex(),wherey());
 		control=1;
 	    }
-	    if(key==' '&&k==0&&board[wherey()-t][wherex()-u]=='þ')
+	    if(key==' '&&k==0&&board[wherey()-t][wherex()-u]==char(254))
 	    {
 			sweep(wherex(),wherey());
 			display(0);
@@ -364,18 +367,18 @@ void game::move(int k=0)
 	    }
 	    if(key=='x'&&k==0)
 	    {
-		if(board[(wherey()-t)][(wherex()-u)]=='±'&&flagcounter>0)
+		if(board[(wherey()-t)][(wherex()-u)]==char(177)&&flagcounter>0)
 		{
-		 board[(wherey()-t)][(wherex()-u)]='þ';
+		 board[(wherey()-t)][(wherex()-u)]=char(254);
 		 flagcounter--;display(0);
 		 control=1;
 		 }
 	    }
 	    if(key=='z'&&k==0)
 	    {
-			if(board[(wherey()-t)][(wherex()-u)]=='þ'&&flagcounter<mine)
+			if(board[(wherey()-t)][(wherex()-u)]==char(254)&&flagcounter<mine)
 		    {
-			board[(wherey()-t)][(wherex()-u)]='±';
+			board[(wherey()-t)][(wherex()-u)]=char(177);
 			flagcounter++;
 			display(0);
 			control=1;
@@ -386,6 +389,7 @@ void game::move(int k=0)
     wincheck();
     timer=(clock()-watch);
 }
+
 void game::wincheck()
 {
 	int retkey=0;
@@ -394,9 +398,9 @@ void game::wincheck()
 	{
 		for(int j=0;j<x1;j++)
 		{
-			if(board[i*2+1][j*2+1]=='')
+			if(board[i*2+1][j*2+1]==char(15))
 			retkey=-1;
-			if(board[i*2+1][j*2+1]=='þ'||board[i*2+1][j*2+1]=='±')
+			if(board[i*2+1][j*2+1]==char(254)||board[i*2+1][j*2+1]==char(177))
 			counter++;
 		}
 	}
@@ -404,7 +408,6 @@ void game::wincheck()
 	gamestat=1;
 	else gamestat=retkey;
 }
-
 void welcom(){
 clrscr();
 const int xpos=11;
